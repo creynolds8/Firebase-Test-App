@@ -14,11 +14,14 @@ firebase.initializeApp({
 const PROXYURL = 'https://b203-184-66-5-236.ngrok-free.app/';
 
 self.addEventListener("push", (event) => {
-  if (event.data.notification) {
-    const payload = event.data.notification.json();
-    self.registration.showNotification(payload.title, {        
-      body: payload.body,
-      icon: "/icon.png",
+  console.log('event', event.data.json());
+  
+  if (event.data) {
+    const payload = event.data.json();
+    const { title, body } = payload.notification;
+    self.registration.showNotification(title, {        
+      body: body,
+      icon: '/icon.png'
     });
     console.log('push - payload:', payload);
     

@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     requestNotificationPermission()
     .then((result) => {
-      console.log(result);
+      console.log('Permission result obj:', result);
       setPermissionStatus(result.permission);
       setStatus(result.status);
       setTokenInfo(result.token);
