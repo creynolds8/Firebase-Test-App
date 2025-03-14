@@ -4,7 +4,7 @@
     "slug": "new",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "https://github.com/creynolds8/Firebase-Test-App/blob/main/FirebaseTestApp/assets/images/icon.png?raw=true",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -20,7 +20,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "https://github.com/creynolds8/Firebase-Test-App/blob/main/FirebaseTestApp/assets/images/favicon.png?raw=true"
     },
     "plugins": [
       "expo-router",

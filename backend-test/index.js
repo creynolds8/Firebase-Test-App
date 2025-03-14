@@ -42,14 +42,37 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(function(req,res,next) {
-  var
-    ua = req.headers['user-agent'];
-  if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)/gi.test(ua)) {
-    console.log(ua,' is a bot');
-  } 
- next();
-});
+// app.use(function(req,res,next) {
+//   const ua = req.headers['user-agent'];
+//   console.log(ua);
+  
+//   if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)|(undici)/gi.test(ua)) {
+//     console.warn('*****\n', ua,' is a bot');
+//     const event = psuedoEventDB['meeting']
+//     const html = `
+//     <!DOCTYPE html>
+//     <html lang="en">
+//     <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <meta property="og:title" content="${event.title}" />
+//     <meta property="og:description" content="${event.description}" />
+//     <meta property="og:image" content="${event.image}" />
+//     <meta property="og:type" content="website" />
+//     <title>${event.title}</title>
+//     </head>
+//     `
+//     res.send()
+//   }
+//  next();
+// });
+
+// app.get('/', (req, res) => {
+//   const userAgent = req.headers['user-agent']
+//   console.log(userAgent);
+//   console.log(req.headers)
+//   res.send()
+// })
 
 app.get('/event/:name', (req, res) => {
   const userAgent = req.headers['user-agent'].toLowerCase();
@@ -75,10 +98,12 @@ app.get('/event/:name', (req, res) => {
         <meta property="og:image" content=${event.image_link} />
         <title>${event.event_name}</title>
       </head>
-      <body></body>
+      <body>
+      <h1>${event.event_id}</h1>
+      </body>
       </html>
     `
-  return res.send(event);
+  res.send(html);
 });
 
 app.listen(PORT, () => {
