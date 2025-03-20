@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, make_response # type: ignore
+from flask import Flask, render_template_string, make_response, request # type: ignore
 from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
@@ -37,6 +37,49 @@ psuedoEventDB = {
 
 frontendURL = 'http://localhost:8081'
 
+SCRAPER_AGENTS = [
+    # Facebook
+    "facebookexternalhit", "Facebot",
+    # Twitter
+    "Twitterbot",
+    # LinkedIn
+    "LinkedInBot",
+    # Slack
+    "Slackbot-LinkExpanding", "Slackbot",
+    # WhatsApp
+    "WhatsApp",
+    # Discord
+    "Discordbot",
+    # Telegram
+    "TelegramBot",
+    # Pinterest
+    "Pinterestbot",
+    # Reddit
+    "redditbot",
+    # Microsoft Teams
+    "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; MSTEAMS)",
+    # Apple iMessage
+    "Applebot",
+    # Google Chat (formerly Hangouts)
+    "Google-Apps-Script",
+    # Viber
+    "Viber",
+    # Skype
+    "SkypeUriPreview",
+    # Instagram
+    "Instagram",
+    # Generic bot catch-all (optional, use with caution)
+    "bot", "crawler", "spider", "python-requests", "okhttp"
+]
+
+def get_user_agent():
+    user_agent = request.headers.get('User-Agent')
+    print(user_agent)
+    if user_agent:
+        user_agent.lower()
+        return any(agent.lower() in user_agent for agent in SCRAPER_AGENTS)
+    return False
+
 @app.route("/")
 def home():
     return "Hello, World!"
@@ -50,12 +93,13 @@ def dynamic_event_data(name):
 
 @app.route("/e/<string:name>")
 def dynamic_og_preview(name):
+    print(get_user_agent())
     event = psuedoEventDB[name]
 
     title=f"{event['event_name']} Preview"
     image=event['image_link']
     description=event['description']
-    original_path=f"/e/{name}"
+    original_path=f"/event/{name}"
 
     ogTemplate = f"""<!DOCTYPE html>
     <html prefix="og: http://ogp.me/ns#">
